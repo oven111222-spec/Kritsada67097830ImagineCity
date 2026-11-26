@@ -9,7 +9,7 @@ const rootDir = path.dirname(fileURLToPath(import.meta.url));
 
 export default defineConfig(({command}) => {
   return {
-    base: command === 'build' ? './' : '/',
+    base: process.env.VERCEL ? '/' : command === 'build' ? './' : '/',
     plugins: [
       react(),
       tailwindcss(),

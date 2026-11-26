@@ -2457,17 +2457,25 @@
           }
         });
 
-        // Boot: Detect whether assets live at ./assets/aistudio/ (Vite/dist) or ./public/assets/aistudio/ (VS Code Live Server root)
-        fetch('./assets/aistudio/' + LOGO_FILE, { method: 'HEAD' })
-          .then((res) => {
-            if (!res.ok) ASSET_PREFIX = './public/assets/aistudio/';
-          })
-          .catch(() => {
-            ASSET_PREFIX = './public/assets/aistudio/';
-          })
-          .finally(() => {
-            render();
-          });
+        // Boot: Detect whether assets live at ./assets/aistudio/, /assets/aistudio/ (Vercel), or ./public/assets/aistudio/ (VS Code Live Server root)
+        (async function boot() {
+          const candidates = [
+            './assets/aistudio/',
+            '/assets/aistudio/',
+            './public/assets/aistudio/',
+          ];
+          for (const prefix of candidates) {
+            try {
+              const res = await fetch(prefix + LOGO_FILE, { method: 'HEAD' });
+              const ctype = (res.headers.get('content-type') || '').toLowerCase();
+              if (res.ok && ctype.startsWith('image/')) {
+                ASSET_PREFIX = prefix;
+                break;
+              }
+            } catch (_) {}
+          }
+          render();
+        })();
       })();
     </script>
   </body>
