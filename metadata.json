@@ -1,0 +1,6 @@
+{
+  "name": "Imagine City: คืนสุดท้ายก่อนสีจะหายไป",
+  "description": "โจทย์ควิซเชิงโต้ตอบ (Interactive Story Quiz) เพื่อค้นหาตัวตน เส้นทางอาชีพ และสาขาที่ใช่ ณ School of Digital Media (SDM)",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
